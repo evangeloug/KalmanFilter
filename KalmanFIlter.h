@@ -12,7 +12,19 @@ public:
     KalmanFilter(MatrixXd A,MatrixXd B,MatrixXd C,
                     MatrixXd x0,MatrixXd P0,unsigned int max_steps = 100);
 
+    // predict the next state estimate and error covariance
+    // from the given controls and system model
+    void predictEstimate(MatrixXd controlInput);
+    // update the state estimate and error covariance
+    // by correcting it with the given measurement
+    void updateEstimate(MatrixXd measurement);
 
+    // load measurement data from a CSV file
+    static MatrixXd readData(string readFile);
+    // save the stored data to CSV files
+    void saveData(string stateEstimatesApostFile, string stateEstimatesApriFile,
+                  string errorCovarianceApostFile, string errorCovarianceApriFile,
+                  string kalmanGainsFile, string estimationErrorsFile) const;
 private:
     int time_step; // time step
     unsigned int input_dim, state_dim, output_dim; // vector/matrix dimensions
