@@ -14,13 +14,16 @@ public:
 
 
 private:
-    int k; // time step
+    int time_step; // time step
     unsigned int input_dim, state_dim, output_dim; // vector/matrix dimensions
 
-    MatrixXd A,B,C; // system matrices
-    MatrixXd Q,R;   // covariance matrices (process noise, measurement noise
+    MatrixXd A,B,C; // system matrices (A: state transition, B: control input, C: measurement)
+    MatrixXd Q,R;   // covariance matrices (process noise, measurement noise)
     MatrixXd P0;    // initial estimation error covariance
     MatrixXd x0;    // initial state 
+    // keep track of states, covariances, gains, errors over time
+    // A-priori: before measurement update
+    // A-posteriori: after measurement update
     MatrixXd stateEstimatesApost;   // a posteriori state estimates
     MatrixXd stateEstimatesApri;    // a priori state estimates
     MatrixXd errorCovarianceApost;  // a posteriori error covariance
