@@ -2,15 +2,18 @@
 #define KALMANFILTER_H
 
 #include <Eigen/Dense>
+#include <Eigen/Core>
+#include <string>
 
 using namespace Eigen;
 using namespace std;
 
 class KalmanFilter {
 public: 
-    KalmanFilter(); 
-    KalmanFilter(MatrixXd A,MatrixXd B,MatrixXd C,
-                    MatrixXd x0,MatrixXd P0,unsigned int max_steps = 100);
+
+    KalmanFilter(MatrixXd Ainput, MatrixXd Binput, MatrixXd Hinput,
+                    MatrixXd x0input, MatrixXd P0input, MatrixXd Qinput,
+                    MatrixXd Rinput, unsigned int max_steps = 100);
 
     // predict the next state estimate and error covariance
     // from the given controls and system model
@@ -29,7 +32,7 @@ private:
     int time_step; // time step
     unsigned int input_dim, state_dim, output_dim; // vector/matrix dimensions
 
-    MatrixXd A,B,C; // system matrices (A: state transition, B: control input, C: measurement)
+    MatrixXd A,B,H; // system matrices (A: state transition, B: control input, H: measurement)
     MatrixXd Q,R;   // covariance matrices (process noise, measurement noise)
     MatrixXd P0;    // initial estimation error covariance
     MatrixXd x0;    // initial state 
@@ -38,8 +41,8 @@ private:
     // A-posteriori: after measurement update
     MatrixXd stateEstimatesApost;   // a posteriori state estimates
     MatrixXd stateEstimatesApri;    // a priori state estimates
-    MatrixXd errorCovarianceApost;  // a posteriori error covariance
-    MatrixXd errorCovarianceApri;   // a priori error covariance
+    MatrixXd stateCovarianceApost;  // a posteriori error covariance
+    MatrixXd stateCovarianceApri;   // a priori error covariance
     MatrixXd kalmanGains;           // Kalman gain matrices
     MatrixXd estimationErrors;      // estimation errors
 };
