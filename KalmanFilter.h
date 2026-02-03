@@ -4,6 +4,11 @@
 #include <Eigen/Dense>
 #include <Eigen/Core>
 #include <string>
+#include <iostream>
+#include<tuple>
+#include<string>
+#include<fstream>
+#include<vector>
 
 using namespace Eigen;
 using namespace std;
